@@ -1,0 +1,60 @@
+[build-system]
+requires = ["hatchling>=1.21"]
+build-backend = "hatchling.build"
+
+[project]
+name = "indicium-adapters-multi-omics"
+version = "0.1.0"
+description = "Multi-omics DomainAdapter for the indicium ecosystem: EDAM-backed classification vocabulary and claim/ontology enrichment for cross-layer integration"
+readme = "README.md"
+# 3.11, not 3.12: this must be installable into the AgenticScienceBuilder
+# environment, which is where the classification vocabulary it feeds is consumed.
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [{ name = "Louis-Felix Nothias", email = "louis-felix.nothias@cnrs.fr" }]
+keywords = [
+  "multi-omics", "multiomics", "data-integration", "systems-biology",
+  "EDAM", "indicium", "ontology", "SSSOM",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+dependencies = ["indicium-adapters>=0.5.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[project.entry-points."indicium.adapters"]
+multi-omics = "indicium_adapters_multi_omics.multi_omics:MultiOmicsAdapter"
+
+[project.urls]
+Homepage = "https://github.com/HolobiomicsLab/indicium-adapters-multi-omics"
+Repository = "https://github.com/HolobiomicsLab/indicium-adapters-multi-omics"
+Issues = "https://github.com/HolobiomicsLab/indicium-adapters-multi-omics/issues"
+Changelog = "https://github.com/HolobiomicsLab/indicium-adapters-multi-omics/blob/main/CHANGELOG.md"
+
+# Local-dev resolution for the sibling repos (neither is on PyPI). uv-only and
+# stripped from the published wheel; mirrors indicium-adapters' own table.
+# Without this, `uv pip install -e .` cannot resolve indicium-adapters at all.
+[tool.uv.sources]
+indicium-standard = { path = "../indicium", editable = true }
+indicium-adapters = { path = "../indicium-adapters", editable = true }
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/indicium_adapters_multi_omics"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --strict-markers"
