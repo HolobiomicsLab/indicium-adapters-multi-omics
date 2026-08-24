@@ -58,14 +58,10 @@ class MultiOmicsAdapter:
     already describes on its own, which is the sibling single-omics adapters'
     concern.
 
-    ``subdomains`` (the layers a paper can say it integrated: genomics,
-    proteomics, metabolomics and so on) and ``techniques`` (dimensionality
-    reduction, network analysis, imputation and their EDAM children) are both
-    read from the generated EDAM index rather than hand-listed. Neither the
-    domain root (Multiomics, a leaf in EDAM) nor Omics (which files the layers,
-    not the methods that combine them) reaches a technique vocabulary on its
-    own, so ``data/build_edam_index.py`` adds a second, disjoint group of EDAM
-    operation roots for techniques and records why each was chosen.
+    ``subdomains`` and ``techniques`` are declared literally, as fixed by the
+    2026-08-25 cross-domain vocabulary audit. They were previously read off the
+    generated EDAM index; the audit's terms name no EDAM concept, so the index
+    can no longer source them. The index still backs ``enrich_claim``.
 
     This domain overlaps every single-omics domain by construction: a paper
     integrating transcriptomics and proteomics genuinely uses transcriptomics'
@@ -132,27 +128,26 @@ class MultiOmicsAdapter:
 
     ontology_prefixes: dict[str, str] = dict(_ONTOLOGY_PREFIXES)
 
-    # ---- vocabulary sourced from the generated EDAM index -------------------
+    # ---- classification vocabulary ------------------------------------------
 
-    @property
-    def subdomains(self) -> tuple[str, ...]:
-        """The omics layers a multi-omics paper can integrate, read from EDAM.
+    # Set by the 2026-08-25 cross-domain vocabulary audit: a term two sciences
+    # both declare cannot tell them apart, so shared terms were dropped.
+    subdomains: tuple[str, ...] = (
+        "single-cell-multi-omics",
+        "spatial-multi-omics",
+        "metabologenomics",
+    )
 
-        Sourced from Omics's own direct children rather than hand-listed, so
-        the layer vocabulary is EDAM's and moves with an EDAM release.
-        """
-        return _edam.subtopics()
-
-    @property
-    def techniques(self) -> tuple[str, ...]:
-        """The integration techniques this index reads off EDAM.
-
-        Sourced from a second group of EDAM operation roots -- dimensionality
-        reduction, network analysis, imputation -- because neither the domain
-        root nor Omics carries a technique hierarchy of its own. See
-        ``data/build_edam_index.py`` for why each root was chosen.
-        """
-        return _edam.techniques()
+    # Same audit, same rule -- shared terms dropped as non-discriminating.
+    techniques: tuple[str, ...] = (
+        "multi-omics-factor-analysis",
+        "similarity-network-fusion",
+        "multi-block-data-analysis",
+        "multi-omics-batch-effect-correction",
+        "cite-seq",
+        "single-cell-multiome-sequencing",
+        "weighted-nearest-neighbour-integration",
+    )
 
     # ---- protocol methods -----------------------------------------------------
 

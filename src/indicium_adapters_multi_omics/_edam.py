@@ -46,8 +46,9 @@ def roots() -> tuple[str, ...]:
 def subtopics() -> tuple[str, ...]:
     """The kebab-case slugs of the omics layers this index reads off Omics's children.
 
-    This is what ``MultiOmicsAdapter.subdomains`` returns: the layer names a
-    multi-omics paper integrates, taken from EDAM rather than hand-listed.
+    Index provenance only. It no longer sources
+    ``MultiOmicsAdapter.subdomains``, which the 2026-08-25 cross-domain
+    vocabulary audit fixed to terms EDAM does not carry.
     """
     return tuple(_payload()["subtopics"])
 
@@ -55,10 +56,9 @@ def subtopics() -> tuple[str, ...]:
 def techniques() -> tuple[str, ...]:
     """The kebab-case slugs of the integration techniques this index reads off EDAM.
 
-    This is what ``MultiOmicsAdapter.techniques`` returns. Neither the domain
-    root nor Omics carries a technique hierarchy, so these come from a second,
-    disjoint group of EDAM roots recorded in ``build_edam_index.py`` -- still
-    read from EDAM, never hand-listed.
+    Cut from a second, disjoint group of EDAM roots recorded in
+    ``build_edam_index.py``. Index provenance only. It no longer sources
+    ``MultiOmicsAdapter.techniques``, for the reason given above.
     """
     return tuple(_payload()["techniques"])
 
