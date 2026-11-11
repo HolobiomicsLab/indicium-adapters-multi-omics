@@ -119,8 +119,10 @@ belong in the claim text itself, resolved by the qualifier that names them
 
 ## Install
 
+The public dependencies are installed from PyPI with the development extra:
+
 ```bash
-uv pip install -e .
+python -m pip install -e ".[dev]"
 ```
 
 The `indicium.adapters` entry point makes it discoverable via
