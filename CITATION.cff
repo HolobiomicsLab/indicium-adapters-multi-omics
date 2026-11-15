@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "indicium-adapters-multi-omics"
+abstract: >-
+  Multi-omics DomainAdapter for the indicium ecosystem: EDAM-backed classification
+  vocabulary and claim/ontology enrichment for cross-layer integration.
+version: 0.1.0
+date-released: "2026-08-24"
+license: MIT
+type: software
+repository-code: "https://github.com/HolobiomicsLab/indicium-adapters-multi-omics"
+authors:
+  - family-names: Nothias
+    given-names: Louis-Félix
+    orcid: "https://orcid.org/0000-0001-6711-6719"
+    affiliation: CNRS

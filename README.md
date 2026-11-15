@@ -141,3 +141,5 @@ on an EDAM release. Never runs at install or import time.
 ## Licence
 
 MIT.
+
+Cite this package with `CITATION.cff`.
